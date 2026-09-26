@@ -1,0 +1,7 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:orientation="vertical" style="@style/Page"><com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" />
+<TextView style="@style/Title" android:text="@string/notifications" />
+<ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
+<TextView android:id="@+id/message" style="@style/Message" />
+<androidx.recyclerview.widget.RecyclerView android:id="@+id/list" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" /><com.google.android.material.button.MaterialButton android:id="@+id/more" style="@style/SecondaryAction" android:text="@string/load_more" />
+<com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" />
+</LinearLayout>

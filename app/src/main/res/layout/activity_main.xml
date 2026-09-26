@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ScrollView xmlns:ns0="http://schemas.android.com/apk/res/android" xmlns:ns1="http://schemas.android.com/apk/res-auto" ns0:layout_width="match_parent" ns0:layout_height="match_parent" ns0:fillViewport="true">
+  <LinearLayout ns0:id="@+id/root" ns0:orientation="vertical" style="@style/Page" ns0:layout_height="wrap_content">
+    <TextView style="@style/Title" ns0:text="@string/app_name" />
+    <TextView style="@style/Title" ns0:text="@string/session_check" />
+    <ProgressBar ns0:id="@+id/progress" ns0:layout_width="48dp" ns0:layout_height="48dp" ns0:layout_gravity="center_horizontal" ns0:visibility="gone" ns0:contentDescription="@string/loading" ns0:layout_marginBottom="16dp" />
+    <TextView ns0:id="@+id/message" style="@style/Message" ns0:accessibilityLiveRegion="polite" />
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/retry" style="@style/QuietAction" ns0:text="@string/retry" ns1:icon="@drawable/ic_refresh" />
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/logout" style="@style/QuietAction" ns0:text="@string/logout" ns1:icon="@drawable/ic_logout" />
+  </LinearLayout>
+</ScrollView>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ScrollView xmlns:ns0="http://schemas.android.com/apk/res/android" xmlns:ns1="http://schemas.android.com/apk/res-auto" ns0:layout_width="match_parent" ns0:layout_height="match_parent" ns0:fillViewport="true">
+  <LinearLayout ns0:id="@+id/root" ns0:orientation="vertical" style="@style/Page" ns0:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/back" style="@style/QuietAction" ns0:text="@string/back" ns1:icon="@drawable/ic_back" />
+    <TextView style="@style/Title" ns0:text="@string/service_details" />
+    <ProgressBar ns0:id="@+id/progress" ns0:layout_width="48dp" ns0:layout_height="48dp" ns0:layout_gravity="center_horizontal" ns0:visibility="gone" ns0:contentDescription="@string/loading" ns0:layout_marginBottom="16dp" />
+    <TextView ns0:id="@+id/message" style="@style/Message" ns0:accessibilityLiveRegion="polite" />
+    <TextView ns0:id="@+id/name" style="@style/Title" />
+    <TextView style="@style/Badge" ns0:text="@string/local" ns0:id="@+id/modality" />
+    <TextView style="@style/Price" ns0:text="@string/price_agree" ns0:id="@+id/price" />
+    <TextView ns0:id="@+id/body" style="@style/Body" />
+    <TextView style="@style/SectionTitle" ns0:text="@string/professional_info" />
+    <TextView ns0:id="@+id/professional_info" style="@style/Body" />
+    <TextView style="@style/SectionTitle" ns0:text="@string/service_description" />
+    <TextView ns0:id="@+id/description" style="@style/Body" />
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/times" style="@style/Action" ns0:text="@string/view_times" ns1:icon="@drawable/ic_calendar" />
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/retry" style="@style/QuietAction" ns0:text="@string/refresh" ns1:icon="@drawable/ic_refresh" />
+  </LinearLayout>
+</ScrollView>

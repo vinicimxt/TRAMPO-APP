@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Card">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/card_padding">
+    <TextView android:id="@+id/name" style="@style/SectionTitle" />
+    <TextView style="@style/Badge" android:text="@string/status_pending" android:id="@+id/status" />
+    <TextView android:id="@+id/body" style="@style/Body" android:drawablePadding="8dp" app:drawableStartCompat="@drawable/ic_clock" />
+    <TextView android:id="@+id/description" style="@style/Body" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/details" style="@style/SecondaryAction" android:text="@string/view_details" app:icon="@drawable/ic_arrow" />
+  </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

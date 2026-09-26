@@ -1,0 +1,1 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item android:left="24dp" android:right="24dp" android:top="32dp" android:bottom="32dp" android:drawable="@drawable/trampo_logo"/></layer-list>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LinearLayout xmlns:ns0="http://schemas.android.com/apk/res/android" xmlns:ns1="http://schemas.android.com/apk/res-auto" ns0:id="@+id/root" ns0:orientation="vertical" style="@style/Page">
+  <com.google.android.material.button.MaterialButton ns0:id="@+id/back" style="@style/QuietAction" ns0:text="@string/back" ns1:icon="@drawable/ic_back" />
+  <TextView style="@style/Title" ns0:text="@string/services" />
+  <TextView style="@style/Body" ns0:text="@string/catalog_subtitle" />
+  <TextView style="@style/Label" ns0:labelFor="@id/search_text" ns0:text="@string/search_hint" />
+  <EditText ns0:id="@+id/search_text" style="@style/Field" ns0:inputType="text" ns0:maxLength="100" ns0:importantForAutofill="no" ns0:imeOptions="actionSearch" />
+  <Spinner ns0:id="@+id/filter_modality" style="@style/Field" ns0:contentDescription="@string/filter_modality" />
+  <com.google.android.material.button.MaterialButton ns0:id="@+id/search" style="@style/SecondaryAction" ns0:text="@string/search" />
+  <ProgressBar ns0:id="@+id/progress" ns0:layout_width="48dp" ns0:layout_height="48dp" ns0:layout_gravity="center_horizontal" ns0:visibility="gone" ns0:contentDescription="@string/loading" ns0:layout_marginBottom="16dp" />
+  <TextView ns0:id="@+id/message" style="@style/Message" ns0:accessibilityLiveRegion="polite" />
+  <androidx.recyclerview.widget.RecyclerView ns0:id="@+id/list" ns0:layout_width="match_parent" ns0:layout_height="0dp" ns0:layout_weight="1" ns0:clipToPadding="false" />
+  <com.google.android.material.button.MaterialButton ns0:id="@+id/more" style="@style/SecondaryAction" ns0:text="@string/load_more" />
+  <com.google.android.material.button.MaterialButton ns0:id="@+id/retry" style="@style/QuietAction" ns0:text="@string/refresh" ns1:icon="@drawable/ic_refresh" />
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<com.google.android.material.card.MaterialCardView xmlns:ns0="http://schemas.android.com/apk/res/android" xmlns:ns1="http://schemas.android.com/apk/res-auto" ns0:layout_width="match_parent" ns0:layout_height="wrap_content" style="@style/Card">
+  <LinearLayout ns0:layout_width="match_parent" ns0:layout_height="wrap_content" ns0:orientation="vertical" ns0:padding="@dimen/card_padding">
+    <TextView ns0:id="@+id/name" style="@style/SectionTitle" />
+    <TextView style="@style/Badge" ns0:text="@string/local" ns0:id="@+id/modality" />
+    <TextView style="@style/Price" ns0:text="@string/price_agree" ns0:id="@+id/price" />
+    <TextView ns0:id="@+id/body" style="@style/Body" />
+    <TextView ns0:id="@+id/description" style="@style/Body" ns0:maxLines="3" ns0:ellipsize="end" />
+    <com.google.android.material.button.MaterialButton ns0:id="@+id/details" style="@style/SecondaryAction" ns0:text="@string/view_details" ns1:icon="@drawable/ic_arrow" />
+  </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,3 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android" style="@style/Card"><LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+<TextView android:id="@+id/name" style="@style/SectionTitle" /><TextView android:id="@+id/body" style="@style/Body" /><TextView android:id="@+id/date_label" style="@style/Body" /><TextView android:id="@+id/status" style="@style/Badge" /><com.google.android.material.button.MaterialButton android:id="@+id/read_notification" style="@style/SecondaryAction" android:text="@string/read_notification" />
+</LinearLayout></com.google.android.material.card.MaterialCardView>

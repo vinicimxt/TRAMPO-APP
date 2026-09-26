@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<LinearLayout android:id="@+id/root" style="@style/Page" android:layout_height="wrap_content">
+<com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" />
+<TextView style="@style/Title" android:text="@string/create_account" />
+<TextView style="@style/Body" android:text="@string/register_hint" />
+<TextView style="@style/Label" android:labelFor="@id/full_name" android:text="@string/full_name" />
+<EditText android:id="@+id/full_name" style="@style/Field" android:inputType="textPersonName" android:maxLength="100" android:importantForAutofill="no" />
+<TextView style="@style/Label" android:labelFor="@id/email" android:text="@string/email" />
+<EditText android:id="@+id/email" style="@style/Field" android:inputType="textEmailAddress" android:maxLength="100" android:importantForAutofill="no" />
+<TextView style="@style/Label" android:labelFor="@id/phone" android:text="@string/phone_optional" />
+<EditText android:id="@+id/phone" style="@style/Field" android:inputType="phone" android:maxLength="20" android:importantForAutofill="no" />
+<TextView style="@style/Label" android:labelFor="@id/password" android:text="@string/password" />
+<EditText android:id="@+id/password" style="@style/Field" android:inputType="textPassword" android:maxLength="1024" android:importantForAutofill="no" />
+<TextView style="@style/Body" android:text="@string/password_hint" />
+<ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
+<TextView android:id="@+id/message" style="@style/Message" />
+<com.google.android.material.button.MaterialButton android:id="@+id/submit" style="@style/Action" android:text="@string/create_account" />
+</LinearLayout></ScrollView>

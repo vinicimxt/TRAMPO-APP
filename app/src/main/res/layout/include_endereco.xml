@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LinearLayout xmlns:ns0="http://schemas.android.com/apk/res/android" xmlns:ns1="http://schemas.android.com/apk/res-auto" ns0:id="@+id/address_form" ns0:layout_width="match_parent" ns0:layout_height="wrap_content" ns0:orientation="vertical" ns0:visibility="gone" ns0:background="@drawable/bg_section" ns0:padding="16dp" ns0:layout_marginTop="16dp">
+  <TextView style="@style/SectionTitle" ns0:text="@string/address_title" />
+  <TextView style="@style/Body" ns0:text="@string/address_help" />
+  <TextView style="@style/Label" ns0:labelFor="@id/cep" ns0:text="@string/cep" />
+  <EditText ns0:id="@+id/cep" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="number" ns0:maxLength="9" />
+  <com.google.android.material.button.MaterialButton ns0:id="@+id/lookup" style="@style/SecondaryAction" ns0:text="@string/lookup_cep" ns1:icon="@drawable/ic_location" />
+  <TextView ns0:id="@+id/cep_message" style="@style/Message" ns0:accessibilityLiveRegion="polite" />
+  <TextView style="@style/Label" ns0:labelFor="@id/street" ns0:text="@string/street" />
+  <EditText ns0:id="@+id/street" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="text" />
+  <TextView style="@style/Label" ns0:labelFor="@id/house_number" ns0:text="@string/number" />
+  <EditText ns0:id="@+id/house_number" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="text" />
+  <TextView style="@style/Label" ns0:labelFor="@id/complement" ns0:text="@string/complement" />
+  <EditText ns0:id="@+id/complement" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="text" />
+  <TextView style="@style/Label" ns0:labelFor="@id/district" ns0:text="@string/district" />
+  <EditText ns0:id="@+id/district" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="text" />
+  <TextView style="@style/Label" ns0:labelFor="@id/city" ns0:text="@string/city" />
+  <EditText ns0:id="@+id/city" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="text" />
+  <TextView style="@style/Label" ns0:labelFor="@id/uf" ns0:text="@string/uf" />
+  <EditText ns0:id="@+id/uf" style="@style/Field" ns0:importantForAutofill="no" ns0:inputType="textCapCharacters" ns0:maxLength="2" />
+</LinearLayout>

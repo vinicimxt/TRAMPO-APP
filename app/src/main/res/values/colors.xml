@@ -1,0 +1,18 @@
+<resources>
+    <color name="brand">#5934AD</color>
+    <color name="on_brand">#FFFFFF</color>
+    <color name="secondary">#006B80</color>
+    <color name="page">#F7F7FC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="ink">#202039</color>
+    <color name="muted">#59596F</color>
+    <color name="outline">#D5D2E3</color>
+    <color name="brand_soft">#EEE8FA</color>
+    <color name="success">#176641</color>
+    <color name="success_soft">#E0F3E8</color>
+    <color name="warning">#785200</color>
+    <color name="warning_soft">#FFF0CB</color>
+    <color name="error">#AC263D</color>
+    <color name="error_soft">#FCE8ED</color>
+    <color name="logo_surface">#FFFFFF</color>
+</resources>

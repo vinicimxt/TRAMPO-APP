@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+  <LinearLayout android:id="@+id/root" android:orientation="vertical" style="@style/Page" android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" app:icon="@drawable/ic_back" />
+    <TextView style="@style/Title" android:text="@string/new_booking" />
+    <TextView android:id="@+id/name" style="@style/Body" android:background="@drawable/bg_section" android:padding="20dp" />
+    <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" android:layout_marginBottom="16dp" />
+    <TextView android:id="@+id/message" style="@style/Message" android:accessibilityLiveRegion="polite" />
+    <LinearLayout android:id="@+id/edit_form" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+      <TextView style="@style/SectionTitle" android:text="@string/schedule_section" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/date" style="@style/SecondaryAction" android:text="@string/choose_date" app:icon="@drawable/ic_calendar" />
+      <TextView android:id="@+id/date_label" style="@style/Body" />
+      <TextView style="@style/Label" android:text="@string/times" android:labelFor="@id/time" />
+      <Spinner android:id="@+id/time" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="56dp" />
+      <TextView style="@style/Label" android:labelFor="@id/notes" android:text="@string/description" />
+      <EditText android:id="@+id/notes" style="@style/Field" android:importantForAutofill="no" android:inputType="textMultiLine" android:singleLine="false" android:minLines="3" android:gravity="top|start" />
+      <include layout="@layout/include_endereco" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/review" style="@style/Action" android:text="@string/review" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/review_form" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+      <TextView style="@style/Title" android:text="@string/review_title" />
+      <TextView android:id="@+id/summary" style="@style/Body" android:saveEnabled="false" />
+      <TextView style="@style/Body" android:text="@string/review_hint" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/confirm" style="@style/Action" android:text="@string/confirm_booking" app:icon="@drawable/ic_check" />
+      <com.google.android.material.button.MaterialButton android:id="@+id/edit" style="@style/SecondaryAction" android:text="@string/edit_booking" />
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton android:id="@+id/bookings" style="@style/SecondaryAction" android:text="@string/bookings" app:icon="@drawable/ic_calendar" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" app:icon="@drawable/ic_refresh" />
+  </LinearLayout>
+</ScrollView>

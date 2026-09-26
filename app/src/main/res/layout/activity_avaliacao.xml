@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<LinearLayout android:id="@+id/root" style="@style/Page" android:layout_height="wrap_content">
+<com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" />
+<TextView style="@style/Title" android:text="@string/rating_title" />
+
+<ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
+<TextView android:id="@+id/message" style="@style/Message" />
+<TextView style="@style/Label" android:text="@string/rating" />
+<Spinner android:id="@+id/rating" style="@style/Field" android:contentDescription="@string/rating" />
+<TextView style="@style/Label" android:labelFor="@id/review_comment" android:text="@string/review_comment" />
+<EditText android:id="@+id/review_comment" style="@style/Field" android:inputType="textMultiLine|textCapSentences" android:maxLength="500" android:importantForAutofill="no" android:singleLine="false" android:minLines="3" android:gravity="top|start" />
+<com.google.android.material.button.MaterialButton android:id="@+id/submit" style="@style/Action" android:text="@string/send_review" />
+<com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" />
+</LinearLayout></ScrollView>

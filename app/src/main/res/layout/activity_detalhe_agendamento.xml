@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+  <LinearLayout android:id="@+id/root" android:orientation="vertical" style="@style/Page" android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" app:icon="@drawable/ic_back" />
+    <TextView style="@style/Title" android:text="@string/booking_details" />
+    <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" android:layout_marginBottom="16dp" />
+    <TextView android:id="@+id/message" style="@style/Message" android:accessibilityLiveRegion="polite" />
+    <TextView android:id="@+id/name" style="@style/Title" />
+    <TextView style="@style/Badge" android:text="@string/status_pending" android:id="@+id/status" />
+    <TextView style="@style/SectionTitle" android:text="@string/booking_information" />
+    <TextView android:id="@+id/body" style="@style/Body" android:drawablePadding="8dp" app:drawableStartCompat="@drawable/ic_clock" />
+    <TextView style="@style/SectionTitle" android:text="@string/booking_extra" />
+    <TextView android:id="@+id/description" style="@style/Body" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/complete_booking" style="@style/Action" android:text="@string/complete_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/review_booking" style="@style/SecondaryAction" android:text="@string/review_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/cancel" style="@style/DangerAction" android:text="@string/cancel_booking" app:icon="@drawable/ic_close" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" app:icon="@drawable/ic_refresh" />
+  </LinearLayout>
+</ScrollView>
