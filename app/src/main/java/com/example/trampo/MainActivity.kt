@@ -5,6 +5,7 @@ import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import com.example.trampo.ui.*
 import com.example.trampo.ui.home.*
+import com.example.trampo.ui.profissional.ProfissionalHomeActivity
 
 class MainActivity : BaseActivity() {
     override val requiresSession = false
@@ -14,7 +15,9 @@ class MainActivity : BaseActivity() {
         val vm = ViewModelProvider(this, SimpleFactory { HomeViewModel(app.auth) })[HomeViewModel::class.java]
         if (!vm.hasSession()) { login(); return }
         vm.state.observe(this) { state ->
-            render(state, R.id.retry)?.let { route(HomeActivity::class.java) }
+            render(state, R.id.retry)?.let { user ->
+                route(if (user.tipo == "profissional") ProfissionalHomeActivity::class.java else HomeActivity::class.java)
+            }
             if (state is UiState.Error && (state.failure.status == 401 || !vm.hasSession())) {
                 app.auth.logout()
                 login(state.failure.message)

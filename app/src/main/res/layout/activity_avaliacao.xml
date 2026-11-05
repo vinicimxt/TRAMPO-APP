@@ -6,8 +6,12 @@
 
 <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
 <TextView android:id="@+id/message" style="@style/Message" />
+<TextView style="@style/Label" android:text="@string/professional" />
+<TextView android:id="@+id/review_professional" style="@style/Body" />
+<TextView style="@style/Label" android:text="@string/service_details" />
+<TextView android:id="@+id/review_service" style="@style/Body" />
 <TextView style="@style/Label" android:text="@string/rating" />
-<Spinner android:id="@+id/rating" style="@style/Field" android:contentDescription="@string/rating" />
+<RatingBar android:id="@+id/rating" android:layout_width="wrap_content" android:layout_height="wrap_content" android:numStars="5" android:stepSize="1" android:rating="0" android:contentDescription="@string/rating" />
 <TextView style="@style/Label" android:labelFor="@id/review_comment" android:text="@string/review_comment" />
 <EditText android:id="@+id/review_comment" style="@style/Field" android:inputType="textMultiLine|textCapSentences" android:maxLength="500" android:importantForAutofill="no" android:singleLine="false" android:minLines="3" android:gravity="top|start" />
 <com.google.android.material.button.MaterialButton android:id="@+id/submit" style="@style/Action" android:text="@string/send_review" />

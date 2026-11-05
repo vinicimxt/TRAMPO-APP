@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.trampo.data.SessionManager
+import com.example.trampo.data.model.UsuarioResponse
 import com.example.trampo.ui.login.LoginActivity
+import com.example.trampo.ui.conta.SenhaActivity
 import org.junit.*
 import org.junit.Assert.*
 import org.junit.runner.RunWith
@@ -49,15 +51,35 @@ class AndroidViewsTest {
             R.layout.activity_agendamentos, R.layout.activity_detalhe_agendamento,
             R.layout.item_servico, R.layout.item_agendamento,
             R.layout.activity_cadastro, R.layout.activity_perfil, R.layout.activity_senha,
-            R.layout.activity_suporte, R.layout.activity_notificacoes, R.layout.activity_avaliacao, R.layout.item_notificacao)
+            R.layout.activity_suporte, R.layout.activity_notificacoes, R.layout.activity_avaliacao, R.layout.item_notificacao) +
+            listOf(R.layout.activity_profissional_home, R.layout.activity_profissional_servicos,
+                R.layout.activity_servico_editor, R.layout.item_servico_proprio,
+                R.layout.activity_profissional_locais, R.layout.activity_local_editor,
+                R.layout.item_local_proprio, R.layout.activity_profissional_avaliacoes,
+                R.layout.item_avaliacao_profissional)
         layouts.forEach { assertNotNull(inflater.inflate(it, null, false)) }
         controller.pause().stop().destroy()
     }
     @Test fun privateSessionCanBeRecoveredAndCleared() {
         val context = RuntimeEnvironment.getApplication()
         SessionManager(context).save("local-test")
+        SessionManager(context).saveUser(UsuarioResponse(7, "Profissional", "pro@example.invalid", "profissional"))
         assertEquals("local-test", SessionManager(context).token())
+        assertEquals("profissional", SessionManager(context).user()?.tipo)
         SessionManager(context).clear()
         assertNull(SessionManager(context).token())
+        assertNull(SessionManager(context).user())
+    }
+    @Test fun logoutFromProfileScreenClearsSessionAndReturnsToLogin() {
+        val context = RuntimeEnvironment.getApplication()
+        SessionManager(context).save("local-test")
+        SessionManager(context).saveUser(UsuarioResponse(7, "Profissional", "pro@example.invalid", "profissional"))
+        val controller = Robolectric.buildActivity(SenhaActivity::class.java).setup()
+        val activity = controller.get()
+        activity.findViewById<Button>(R.id.logout).performClick()
+        assertNull(SessionManager(context).token())
+        assertNull(SessionManager(context).user())
+        assertEquals(LoginActivity::class.java.name, shadowOf(activity).nextStartedActivity.component?.className)
+        controller.pause().stop().destroy()
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+  <LinearLayout android:id="@+id/root" style="@style/Page" android:layout_height="wrap_content">
+    <TextView style="@style/SectionTitle" android:text="@string/app_name" android:textColor="@color/brand" />
+    <TextView android:id="@+id/greeting" style="@style/Title" />
+    <TextView style="@style/Body" android:text="@string/professional_area" />
+    <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
+    <TextView android:id="@+id/message" style="@style/Message" android:accessibilityLiveRegion="polite" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/bookings" style="@style/Action" android:text="@string/received_bookings" />
+    <TextView style="@style/Body" android:text="@string/professional_bookings_hint" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/services" style="@style/SecondaryAction" android:text="@string/my_services" />
+    <TextView style="@style/Body" android:text="@string/my_services_subtitle" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/locations" style="@style/SecondaryAction" android:text="@string/my_locations" />
+    <TextView style="@style/Body" android:text="@string/my_locations_subtitle" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/availability" style="@style/SecondaryAction" android:text="@string/availability" />
+    <TextView style="@style/Body" android:text="@string/availability_hint" />
+    <TextView style="@style/SectionTitle" android:text="@string/account_section" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/my_profile" style="@style/QuietAction" android:text="@string/my_profile" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/my_reviews" style="@style/QuietAction" android:text="@string/my_reviews" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/notifications" style="@style/QuietAction" android:text="@string/notifications" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/support" style="@style/QuietAction" android:text="@string/support" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/logout" style="@style/QuietAction" android:text="@string/logout" />
+  </LinearLayout>
+</ScrollView>

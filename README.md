@@ -1,19 +1,23 @@
-﻿# TRAMPO Android — Área do Cliente
+﻿# TRAMPO Android — Cliente e Profissional
 
-Aplicativo Android em Kotlin para clientes da plataforma TRAMPO. Pelo celular, o cliente pode encontrar serviços, solicitar atendimentos e acompanhar seus agendamentos.
+Aplicativo Android em Kotlin para clientes e profissionais da plataforma TRAMPO. O cliente encontra serviços e acompanha atendimentos; o profissional gerencia serviços, locais, disponibilidade semanal e pedidos recebidos.
 
 Este aplicativo é uma extensão do [TRAMPO Web/API](https://github.com/vinicimxt/Trampo), onde ficam a aplicação web, a API e as regras de negócio. O [TRAMPO Desktop](https://github.com/vinicimxt/Trampo-Desktop) é outra interface do ecossistema, voltada ao profissional. O Android usa a API REST; não acessa diretamente o SQL Server.
 
 ## Funcionalidades
 
-| Área | O que o cliente pode fazer |
-| --- | --- |
-| Conta | Cadastrar-se, entrar, consultar e editar o perfil, alterar a senha e sair. |
-| Serviços | Explorar o catálogo, buscar, filtrar por modalidade e consultar detalhes, profissional e disponibilidade. |
-| Agendamentos | Solicitar, consultar e cancelar agendamentos; confirmar a conclusão e avaliar o atendimento quando aplicável. |
-| Comunicação | Consultar notificações, marcá-las como lidas e enviar uma solicitação ao suporte. |
+| Área | Cliente | Profissional |
+| --- | --- | --- |
+| Conta | Cadastrar-se, entrar, editar perfil, alterar senha e sair | Entrar, editar perfil, alterar senha e sair |
+| Serviços | Explorar, buscar e filtrar o catálogo | Listar, criar, editar e remover/desativar serviços |
+| Disponibilidade e locais | Consultar horários disponíveis | Configurar dias e horários por serviço; gerir locais |
+| Agendamentos | Solicitar, consultar, cancelar, confirmar conclusão e avaliar | Consultar recebidos, confirmar, recusar, cancelar e finalizar |
+| Avaliações | Enviar quando permitido e consultar avaliações públicas | Consultar avaliações recebidas |
+| Comunicação | Notificações e suporte | Notificações e suporte |
 
-Esta versão aceita somente contas com perfil **Cliente**. Profissionais e administradores usam as interfaces Web ou Desktop conforme seu papel.
+O login identifica Cliente ou Profissional por `/api/v1/auth/me` e direciona cada perfil à sua Home. Contas administrativas continuam na Web.
+
+As rotas, regras reaproveitadas e limitações estão documentadas em `docs/ANDROID-MULTIPERFIL.md` no projeto Web/API.
 
 ## Como funciona
 
@@ -31,7 +35,7 @@ Telas Android (Activities e Views XML)
      Backend e SQL Server
 ```
 
-O app valida a conta após o login com `/api/v1/auth/me`. O JWT é guardado nas preferências privadas do aplicativo e enviado como Bearer Token nas chamadas autenticadas. A API controla autorização, dados do usuário e regras de negócio. A configuração do app desabilita backup dos dados locais.
+O app valida a conta após o login com `/api/v1/auth/me`. O JWT e o perfil mínimo são guardados nas preferências privadas do aplicativo e enviados como Bearer Token nas chamadas autenticadas. A API controla autorização, dados do usuário e regras de negócio. A configuração do app desabilita backup dos dados locais; senhas não são armazenadas.
 
 ## Pré-requisitos
 
@@ -39,7 +43,7 @@ O app valida a conta após o login com `/api/v1/auth/me`. O JWT é guardado nas 
 - JDK 25 para o Gradle (o projeto configura o daemon em `gradle/gradle-daemon-jvm.properties`);
 - Android Emulator com Android 7.0/API 24 ou superior;
 - [backend TRAMPO](https://github.com/vinicimxt/Trampo) em execução e configurado com seu banco;
-- uma conta **Cliente**, que também pode ser criada no aplicativo.
+- uma conta **Cliente** (que pode ser criada no aplicativo) ou **Profissional** existente.
 
 O projeto inclui o Gradle Wrapper; não é necessário instalar Gradle separadamente.
 
@@ -48,7 +52,7 @@ O projeto inclui o Gradle Wrapper; não é necessário instalar Gradle separadam
 1. Prepare e inicie o backend conforme o [README do TRAMPO Web/API](https://github.com/vinicimxt/Trampo). Para a configuração Debug atual, ele deve atender em `http://localhost:5165/` na máquina de desenvolvimento.
 2. Abra esta pasta no Android Studio e aguarde a sincronização do Gradle e a instalação dos componentes do SDK solicitados.
 3. Inicie um Android Emulator compatível e execute a configuração `app` em **Debug**.
-4. Cadastre uma conta Cliente ou entre com uma conta existente.
+4. Cadastre uma conta Cliente ou entre com uma conta Cliente ou Profissional existente.
 
 O Debug aponta para `http://10.0.2.2:5165/`, endereço pelo qual o **Android Emulator** alcança o `localhost` do computador. A exceção de HTTP sem criptografia vale apenas para `10.0.2.2` no Debug. Para usar um dispositivo físico, é preciso ajustar o endereço Debug em `app/build.gradle.kts` para uma API acessível pelo dispositivo e configurar a política de rede correspondente.
 

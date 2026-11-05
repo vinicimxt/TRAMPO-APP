@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="12dp">
+  <TextView android:id="@+id/name" style="@style/SectionTitle" />
+  <TextView android:id="@+id/category" style="@style/Body" />
+  <TextView android:id="@+id/price" style="@style/Price" />
+  <TextView android:id="@+id/modality" style="@style/Body" />
+  <TextView android:id="@+id/status" style="@style/Badge" />
+  <TextView android:id="@+id/schedule" style="@style/Body" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/edit" style="@style/SecondaryAction" android:text="@string/edit_service" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/remove" style="@style/DangerAction" android:text="@string/remove_service" />
+</LinearLayout>

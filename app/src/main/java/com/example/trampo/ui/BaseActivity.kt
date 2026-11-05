@@ -53,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         ViewCompat.requestApplyInsets(insetTarget)
         findViewById<Button>(R.id.back)?.setOnClickListener { finish() }
+        findViewById<Button>(R.id.logout)?.setOnClickListener { app.auth.logout(); login() }
         listOf(R.id.message, R.id.cep_message, R.id.date_label).forEach { id ->
             findViewById<TextView>(id)?.apply {
                 visibility = if (text.isNullOrBlank()) View.GONE else View.VISIBLE

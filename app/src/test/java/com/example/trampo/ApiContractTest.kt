@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketTimeoutException
 import java.net.ConnectException
 import java.util.concurrent.TimeUnit
+import java.math.BigDecimal
 
 class MemoryTokens : TokenStore {
     private var value: String? = null
@@ -93,9 +94,16 @@ class ApiContractTest {
         assertNull(session.token())
         assertEquals(0, server.requestCount)
     }
-    @Test fun nonClientProfileIsRejectedAndCleared() = runBlocking {
+    @Test fun professionalProfileIsAccepted() = runBlocking {
         session.save("token")
         json(user.replace("\"cliente\"}", "\"profissional\"}"))
+        val profile = AuthRepository(api, session).me()
+        assertEquals("profissional", profile.tipo)
+        assertEquals("token", session.token())
+    }
+    @Test fun unsupportedProfileIsRejectedAndCleared() = runBlocking {
+        session.save("token")
+        json(user.replace("\"cliente\"}", "\"admin\"}"))
         try { AuthRepository(api, session).me(); fail() } catch (_: PerfilNaoSuportado) { }
         assertNull(session.token())
     }
@@ -251,5 +259,83 @@ class ApiContractTest {
         val request=server.takeRequest()
         assertEquals("/api/v1/suporte",request.path)
         assertEquals(setOf("tipo","assunto","mensagem"),Gson().fromJson(request.body.readUtf8(),Map::class.java).keys)
+    }
+    @Test fun bookingNamesAndProfessionalTransitionsFollowApiContract() = runBlocking {
+        session.save("professional-token")
+        json("[]")
+        assertTrue(AgendamentoRepository(api).listar("recebidos").isEmpty())
+        val listing = server.takeRequest()
+        assertEquals("/api/v1/agendamentos?visao=recebidos", listing.path)
+        assertEquals("Bearer professional-token", listing.getHeader("Authorization"))
+        json("""{"id":12,"servicoId":215,"profissionalId":9,"data":"2026-11-06","hora":"04:18:00","status":"Pendente","descricao":"Teste","enderecoCliente":null,"valorFinal":null,"origemValorFinal":"finalizacao_sem_snapshot_da_oferta","enderecoAtendimento":null,"servicoNome":"Design de landing page","clienteNome":"Maria","atendimento":"Online"}""")
+        val booking = api.agendamento(12)
+        assertEquals("Design de landing page", booking.servicoNome)
+        assertEquals("Maria", booking.clienteNome)
+        server.takeRequest()
+        repeat(3) { server.enqueue(MockResponse().setResponseCode(204)) }
+        api.confirmar(12)
+        api.recusar(12)
+        api.finalizar(12, FinalizarRequest(BigDecimal("234.00")))
+        assertEquals("/api/v1/agendamentos/12/confirmar", server.takeRequest().path)
+        assertEquals("/api/v1/agendamentos/12/recusar", server.takeRequest().path)
+        val finalization = server.takeRequest()
+        assertEquals("POST", finalization.method)
+        assertEquals("/api/v1/agendamentos/12/finalizar", finalization.path)
+        assertEquals(setOf("valorFinal"), Gson().fromJson(finalization.body.readUtf8(), Map::class.java).keys)
+    }
+    @Test fun professionalServiceMutationsNeverSendOwnerId() = runBlocking {
+        session.save("professional-token")
+        json("[]")
+        assertTrue(ProfissionalRepository(api).servicos().isEmpty())
+        assertEquals("/api/v1/servicos/me", server.takeRequest().path)
+        val request = ServicoRequest(2, "Design", "Descrição", "Online", null, "https://example.invalid",
+            "Fixo", BigDecimal("234.00"), "1,3", "08:00:00", "17:00:00")
+        json("""{"id":22}""", 201)
+        assertEquals(22, api.criarServico(request).id)
+        val created = server.takeRequest()
+        assertEquals("POST", created.method)
+        assertFalse(Gson().fromJson(created.body.readUtf8(), Map::class.java).containsKey("profissionalId"))
+        server.enqueue(MockResponse().setResponseCode(204))
+        api.editarServico(22, request)
+        val edited = server.takeRequest()
+        assertEquals("PUT", edited.method)
+        assertEquals("/api/v1/servicos/22", edited.path)
+        assertFalse(Gson().fromJson(edited.body.readUtf8(), Map::class.java).containsKey("profissionalId"))
+        json("""{"id":22,"resultado":"desativado"}""")
+        assertEquals("desativado", api.removerServico(22).resultado)
+        assertEquals("DELETE", server.takeRequest().method)
+    }
+    @Test fun locationsUseBackendCepAndOwnerScopedRoutes() = runBlocking {
+        session.save("professional-token")
+        json("[]")
+        assertTrue(ProfissionalRepository(api).locais().isEmpty())
+        assertEquals("/api/v1/locais", server.takeRequest().path)
+        val data = LocalRequest("Escritório", EnderecoRequest("01001000", "Praça da Sé", "10", null,
+            "Sé", "São Paulo", "SP"))
+        json("""{"id":8}""", 201)
+        assertEquals(8, api.criarLocal(data).id)
+        val created = server.takeRequest()
+        val body = Gson().fromJson(created.body.readUtf8(), Map::class.java)
+        assertEquals(setOf("nome", "dadosEndereco"), body.keys)
+        assertFalse(body.containsKey("profissionalId"))
+        server.enqueue(MockResponse().setResponseCode(204))
+        api.editarLocal(8, data)
+        assertEquals("PUT", server.takeRequest().method)
+        server.enqueue(MockResponse().setResponseCode(409))
+        try { api.excluirLocal(8); fail() } catch (error: HttpException) { assertEquals(409, error.code()) }
+        val removal = server.takeRequest()
+        assertEquals("DELETE", removal.method)
+        assertEquals("/api/v1/locais/8", removal.path)
+    }
+    @Test fun reviewsComeFromPublicAndOwnedRoutes() = runBlocking {
+        json("""{"media":4.5,"total":2,"avaliacoes":[]}""")
+        assertEquals(4.5, api.avaliacoesPublicas(4).media!!, 0.0)
+        assertEquals("/api/v1/servicos/4/avaliacoes", server.takeRequest().path)
+        session.save("professional-token")
+        json("""{"media":null,"total":0,"avaliacoes":[]}""")
+        assertEquals(0, ProfissionalRepository(api).avaliacoes().total)
+        val received = server.takeRequest()
+        assertEquals("/api/v1/profissionais/me/avaliacoes", received.path)
+        assertEquals("Bearer professional-token", received.getHeader("Authorization"))
     }
 }

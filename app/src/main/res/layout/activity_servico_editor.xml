@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+ <LinearLayout android:id="@+id/root" style="@style/Page" android:layout_height="wrap_content" android:importantForAutofill="noExcludeDescendants">
+  <com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" />
+  <TextView android:id="@+id/page_title" style="@style/Title" android:text="@string/new_service" />
+  <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
+  <TextView android:id="@+id/message" style="@style/Message" android:accessibilityLiveRegion="polite" />
+  <TextView style="@style/Label" android:labelFor="@id/name" android:text="@string/service_name" />
+  <EditText android:id="@+id/name" style="@style/Field" android:inputType="textCapSentences" android:maxLength="100" />
+  <TextView style="@style/Label" android:labelFor="@id/description" android:text="@string/service_description" />
+  <EditText android:id="@+id/description" style="@style/Field" android:inputType="textMultiLine|textCapSentences" android:singleLine="false" android:minLines="3" android:maxLength="255" />
+  <TextView android:id="@+id/category_label" style="@style/Label" android:text="@string/category" />
+  <Spinner android:id="@+id/category" android:layout_width="match_parent" android:layout_height="48dp" android:contentDescription="@string/category" />
+  <TextView android:id="@+id/subcategory_label" style="@style/Label" android:text="@string/subcategory" />
+  <Spinner android:id="@+id/subcategory" android:layout_width="match_parent" android:layout_height="48dp" android:contentDescription="@string/subcategory" />
+  <TextView android:id="@+id/category_fixed" style="@style/Body" android:visibility="gone" />
+  <TextView style="@style/Label" android:text="@string/filter_modality" />
+  <Spinner android:id="@+id/modality" android:layout_width="match_parent" android:layout_height="48dp" android:contentDescription="@string/filter_modality" />
+  <LinearLayout android:id="@+id/local_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+   <TextView style="@style/Label" android:text="@string/location_label" />
+   <Spinner android:id="@+id/local" android:layout_width="match_parent" android:layout_height="48dp" android:contentDescription="@string/location_label" />
+  </LinearLayout>
+  <LinearLayout android:id="@+id/link_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+   <TextView style="@style/Label" android:labelFor="@id/link_online" android:text="@string/online_link" />
+   <EditText android:id="@+id/link_online" style="@style/Field" android:inputType="textUri" android:maxLength="255" />
+  </LinearLayout>
+  <TextView style="@style/Label" android:text="@string/price_type" />
+  <Spinner android:id="@+id/price_type" android:layout_width="match_parent" android:layout_height="48dp" android:contentDescription="@string/price_type" />
+  <LinearLayout android:id="@+id/price_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+   <TextView style="@style/Label" android:labelFor="@id/base_price" android:text="@string/base_price" />
+   <EditText android:id="@+id/base_price" style="@style/Field" android:inputType="numberDecimal" />
+  </LinearLayout>
+  <TextView style="@style/SectionTitle" android:text="@string/availability" />
+  <TextView style="@style/Body" android:text="@string/availability_hint" />
+  <CheckBox android:id="@+id/day_0" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/sunday" />
+  <CheckBox android:id="@+id/day_1" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/monday" />
+  <CheckBox android:id="@+id/day_2" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/tuesday" />
+  <CheckBox android:id="@+id/day_3" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/wednesday" />
+  <CheckBox android:id="@+id/day_4" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/thursday" />
+  <CheckBox android:id="@+id/day_5" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/friday" />
+  <CheckBox android:id="@+id/day_6" android:layout_width="match_parent" android:layout_height="48dp" android:text="@string/saturday" />
+  <TextView style="@style/Label" android:labelFor="@id/start_time" android:text="@string/start_time" />
+  <EditText android:id="@+id/start_time" style="@style/Field" android:inputType="time" android:hint="@string/start_time_example" />
+  <TextView style="@style/Label" android:labelFor="@id/end_time" android:text="@string/end_time" />
+  <EditText android:id="@+id/end_time" style="@style/Field" android:inputType="time" android:hint="@string/end_time_example" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/save" style="@style/Action" android:text="@string/save_service" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/logout" style="@style/QuietAction" android:text="@string/logout" />
+ </LinearLayout>
+</ScrollView>

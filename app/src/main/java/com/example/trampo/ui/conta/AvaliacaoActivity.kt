@@ -11,9 +11,11 @@ import com.example.trampo.data.repository.AgendamentoRepository
 import com.example.trampo.ui.*
 
 class AvaliacaoViewModel(private val repository: AgendamentoRepository) : RequestViewModel() {
+    val booking = MutableLiveData<UiState<AgendamentoResponse>>(UiState.Idle)
     val state = MutableLiveData<UiState<EstadoAvaliacaoResponse>>(UiState.Idle)
     val sent = MutableLiveData<UiState<Unit>>(UiState.Idle)
     fun load(id: Int) = request(state) { repository.estadoAvaliacao(id) }
+    fun loadBooking(id: Int) = request(booking) { repository.buscar(id) }
     fun enviar(id: Int, dados: AvaliacaoRequest) {
         if ((state.value as? UiState.Success)?.value?.podeAvaliar != true || sent.value is UiState.Success ||
             (sent.value as? UiState.Error)?.failure?.uncertain == true) return
@@ -28,9 +30,14 @@ class AvaliacaoActivity : BaseActivity() {
         super.onCreate(savedInstanceState); layout(R.layout.activity_avaliacao)
         val id = intent.getIntExtra("id",0)
         val vm = ViewModelProvider(this, SimpleFactory { AvaliacaoViewModel(app.agendamentos) })[AvaliacaoViewModel::class.java]
-        val rating = findViewById<Spinner>(R.id.rating)
-        rating.adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,listOf("1","2","3","4","5"))
+        val rating = findViewById<RatingBar>(R.id.rating)
         val comment = findViewById<EditText>(R.id.review_comment)
+        vm.booking.observe(this) { state ->
+            if (state is UiState.Success) {
+                findViewById<TextView>(R.id.review_professional).text = state.value.profissionalNome.orEmpty()
+                findViewById<TextView>(R.id.review_service).text = state.value.servicoNome.orEmpty()
+            }
+        }
         vm.state.observe(this) { state ->
             render(state, R.id.retry)?.let {
                 findViewById<TextView>(R.id.message).setText(if(it.jaAvaliado) R.string.review_done else if(!it.podeAvaliar) R.string.review_unavailable else R.string.rating_hint)
@@ -51,10 +58,12 @@ class AvaliacaoActivity : BaseActivity() {
         findViewById<Button>(R.id.submit).setOnClickListener {
             AlertDialog.Builder(this).setTitle(R.string.send_review).setMessage(R.string.review_question)
                 .setNegativeButton(R.string.back,null).setPositiveButton(R.string.send_review) { _,_ ->
-                    vm.enviar(id,AvaliacaoRequest(rating.selectedItemPosition+1,comment.text.toString().trim()))
+                    if (rating.rating < 1f) findViewById<TextView>(R.id.message).setText(R.string.select_rating)
+                    else vm.enviar(id,AvaliacaoRequest(rating.rating.toInt(),comment.text.toString().trim()))
                 }.show()
         }
         findViewById<Button>(R.id.retry).setOnClickListener { vm.sent.value = UiState.Idle; vm.load(id) }
         if (vm.state.value is UiState.Idle) vm.load(id)
+        if (vm.booking.value is UiState.Idle) vm.loadBooking(id)
     }
 }

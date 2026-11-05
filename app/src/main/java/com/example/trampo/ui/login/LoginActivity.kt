@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.trampo.R
 import com.example.trampo.ui.*
 import com.example.trampo.ui.home.HomeActivity
+import com.example.trampo.ui.profissional.ProfissionalHomeActivity
 
 class LoginActivity : BaseActivity() {
     override val requiresSession = false
@@ -17,7 +18,10 @@ class LoginActivity : BaseActivity() {
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         vm.state.observe(this) { state ->
-            render(state, R.id.submit)?.let { password.text.clear(); route(HomeActivity::class.java) }
+            render(state, R.id.submit)?.let { user ->
+                password.text.clear()
+                route(if (user.tipo == "profissional") ProfissionalHomeActivity::class.java else HomeActivity::class.java)
+            }
             email.isEnabled = state !is UiState.Loading
             password.isEnabled = state !is UiState.Loading
         }

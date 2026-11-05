@@ -29,3 +29,9 @@ local.properties
 secrets.properties
 keystore.properties
 # gradle/wrapper/, gradlew e gradlew.bat permanecem versionaveis.
+
+# Assinatura e pacotes gerados para distribui??o
+key.properties
+signing.properties
+*.apk
+*.aab

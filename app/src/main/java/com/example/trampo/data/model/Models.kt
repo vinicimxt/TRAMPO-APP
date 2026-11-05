@@ -31,7 +31,10 @@ data class AgendamentoResponse(
     val id: Int, val servicoId: Int, val profissionalId: Int, val data: String,
     val hora: String, val status: String, val descricao: String?,
     val enderecoCliente: String?, val valorFinal: BigDecimal?, val origemValorFinal: String,
-    val enderecoAtendimento: EnderecoAtendimentoResponse?
+    val enderecoAtendimento: EnderecoAtendimentoResponse?,
+    val servicoNome: String? = null, val profissionalNome: String? = null,
+    val clienteNome: String? = null, val atendimento: String? = null, val local: String? = null,
+    val tipoPreco: String? = null, val precoBase: BigDecimal? = null
 )
 data class CadastroRequest(val nome: String, val email: String, val senha: String, val telefone: String?)
 data class PerfilResponse(val nome: String, val email: String, val telefone: String?)
@@ -41,3 +44,23 @@ data class SuporteRequest(val tipo: String, val assunto: String, val mensagem: S
 data class NotificacaoResponse(val id: Int, val titulo: String, val mensagem: String, val dataCriacao: String, val lida: Boolean)
 data class EstadoAvaliacaoResponse(val podeAvaliar: Boolean, val jaAvaliado: Boolean)
 data class AvaliacaoRequest(val nota: Int, val comentario: String?)
+data class AvaliacaoPublicaResponse(val nota: Int, val comentario: String?, val clienteNome: String, val data: String, val servicoNome: String? = null)
+data class AvaliacoesPublicasResponse(val media: Double?, val total: Int, val avaliacoes: List<AvaliacaoPublicaResponse>)
+data class SubcategoriaResponse(val id: Int, val nome: String)
+data class CategoriaResponse(val id: Int, val nome: String, val subcategorias: List<SubcategoriaResponse>)
+data class ServicoProprioResponse(
+    val id: Int, val subcategoriaId: Int, val nome: String, val descricao: String?,
+    val atendimento: String, val localId: Int?, val linkOnline: String?,
+    val tipoPreco: String, val precoBase: BigDecimal?, val ativo: Boolean,
+    val diasSemana: String, val horaInicio: String?, val horaFim: String?,
+    val categoria: String?, val subcategoria: String?
+)
+data class ServicoRequest(
+    val subcategoriaId: Int, val nome: String, val descricao: String?,
+    val atendimento: String, val localId: Int?, val linkOnline: String?,
+    val tipoPreco: String, val precoBase: BigDecimal?, val diasSemana: String,
+    val horaInicio: String, val horaFim: String
+)
+data class RemocaoResponse(val id: Int, val resultado: String)
+data class LocalResponse(val id: Int, val nome: String, val endereco: String, val dadosEndereco: EnderecoAtendimentoResponse?)
+data class LocalRequest(val nome: String, val dadosEndereco: EnderecoRequest)

@@ -13,4 +13,5 @@
 <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
 <TextView android:id="@+id/message" style="@style/Message" />
 <com.google.android.material.button.MaterialButton android:id="@+id/submit" style="@style/Action" android:text="@string/change_password" />
+<com.google.android.material.button.MaterialButton android:id="@+id/logout" style="@style/QuietAction" android:text="@string/logout" />
 </LinearLayout></ScrollView>

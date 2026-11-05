@@ -34,4 +34,6 @@ class ServicosViewModel(private val repository: ServicoRepository) : RequestView
 class DetalheServicoViewModel(private val repository: ServicoRepository) : RequestViewModel() {
     val state = MutableLiveData<UiState<ServicoResponse>>(UiState.Idle)
     fun load(id: Int) = request(state) { repository.buscar(id) }
+    val reviews = androidx.lifecycle.MutableLiveData<UiState<com.example.trampo.data.model.AvaliacoesPublicasResponse>>(UiState.Idle)
+    fun loadReviews(id: Int) = request(reviews) { repository.avaliacoes(id) }
 }

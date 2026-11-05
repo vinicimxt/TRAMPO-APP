@@ -13,6 +13,9 @@
     <TextView ns0:id="@+id/professional_info" style="@style/Body" />
     <TextView style="@style/SectionTitle" ns0:text="@string/service_description" />
     <TextView ns0:id="@+id/description" style="@style/Body" />
+    <TextView style="@style/SectionTitle" ns0:text="@string/reviews_title" />
+    <TextView ns0:id="@+id/reviews_summary" style="@style/Body" />
+    <LinearLayout ns0:id="@+id/reviews_list" ns0:layout_width="match_parent" ns0:layout_height="wrap_content" ns0:orientation="vertical" />
     <com.google.android.material.button.MaterialButton ns0:id="@+id/times" style="@style/Action" ns0:text="@string/view_times" ns1:icon="@drawable/ic_calendar" />
     <com.google.android.material.button.MaterialButton ns0:id="@+id/retry" style="@style/QuietAction" ns0:text="@string/refresh" ns1:icon="@drawable/ic_refresh" />
   </LinearLayout>

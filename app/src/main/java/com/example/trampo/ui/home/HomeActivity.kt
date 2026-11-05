@@ -16,7 +16,10 @@ class HomeActivity : BaseActivity() {
         layout(R.layout.activity_home)
         vm = ViewModelProvider(this, SimpleFactory { HomeViewModel(app.auth) })[HomeViewModel::class.java]
         vm.state.observe(this) { state ->
-            render(state, R.id.retry)?.let { findViewById<TextView>(R.id.greeting).text = getString(R.string.greeting, it.nome) }
+            render(state, R.id.retry)?.let {
+                if (it.tipo == "profissional") { route(com.example.trampo.ui.profissional.ProfissionalHomeActivity::class.java); return@let }
+                findViewById<TextView>(R.id.greeting).text = getString(R.string.greeting, it.nome)
+            }
             if (state is UiState.Error && !vm.hasSession()) login(state.failure.message)
             val ready = state is UiState.Success
             findViewById<Button>(R.id.services).isEnabled = ready

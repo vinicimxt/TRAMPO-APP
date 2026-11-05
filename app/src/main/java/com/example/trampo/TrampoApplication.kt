@@ -14,4 +14,5 @@ class TrampoApplication : Application() {
     val servicos by lazy { ServicoRepository(api) }
     val agendamentos by lazy { AgendamentoRepository(api) }
     val enderecos by lazy { EnderecoRepository(api) }
+    val profissional by lazy { ProfissionalRepository(api) }
 }

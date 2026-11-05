@@ -24,6 +24,12 @@
         <activity android:name=".ui.conta.NotificacoesActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.conta.AvaliacaoActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.home.HomeActivity" android:exported="false" />
+        <activity android:name=".ui.profissional.ProfissionalHomeActivity" android:exported="false" />
+        <activity android:name=".ui.profissional.ProfissionalServicosActivity" android:exported="false" />
+        <activity android:name=".ui.profissional.ServicoEditorActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.profissional.ProfissionalLocaisActivity" android:exported="false" />
+        <activity android:name=".ui.profissional.LocalEditorActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.profissional.ProfissionalAvaliacoesActivity" android:exported="false" />
         <activity android:name=".ui.login.LoginActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>

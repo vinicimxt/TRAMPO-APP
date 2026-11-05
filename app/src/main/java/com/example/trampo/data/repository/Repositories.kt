@@ -24,10 +24,11 @@ class AuthRepository(private val api: TrampoApi, private val session: TokenStore
     suspend fun me(): UsuarioResponse {
         val user = api.me()
         if (user.id <= 0 || user.nome.isNullOrBlank()) throw RespostaInvalida()
-        if (user.tipo != "cliente") {
+        if (user.tipo != "cliente" && user.tipo != "profissional") {
             logout()
             throw PerfilNaoSuportado()
         }
+        session.saveUser(user)
         return user
     }
     fun logout() = session.clear()
@@ -36,15 +37,19 @@ class ServicoRepository(private val api: TrampoApi) {
     suspend fun listar(page: Int, busca: String? = null, atendimento: String? = null) = api.servicos(page, busca = busca, atendimento = atendimento)
     suspend fun buscar(id: Int) = api.servico(id)
     suspend fun agenda(id: Int, data: String) = api.agenda(id, data)
+    suspend fun avaliacoes(id: Int) = api.avaliacoesPublicas(id)
 }
 class AgendamentoRepository(private val api: TrampoApi) {
-    suspend fun listar() = api.agendamentos()
+    suspend fun listar(visao: String = "meus") = api.agendamentos(visao)
     suspend fun buscar(id: Int) = api.agendamento(id)
     suspend fun criar(request: AgendamentoRequest) = api.criar(request)
     suspend fun concluir(id: Int) = api.concluir(id)
     suspend fun estadoAvaliacao(id: Int) = api.estadoAvaliacao(id)
     suspend fun avaliar(id: Int, request: AvaliacaoRequest) = api.avaliar(id, request)
     suspend fun cancelar(id: Int) = api.cancelar(id)
+    suspend fun confirmar(id: Int) = api.confirmar(id)
+    suspend fun recusar(id: Int) = api.recusar(id)
+    suspend fun finalizar(id: Int, valor: java.math.BigDecimal) = api.finalizar(id, com.example.trampo.data.api.FinalizarRequest(valor))
 }
 class EnderecoRepository(private val api: TrampoApi) {
     suspend fun cep(cep: String) = api.cep(cep.filter(Char::isDigit))
@@ -58,4 +63,17 @@ class ContaRepository(private val api: TrampoApi) {
 class NotificacaoRepository(private val api: TrampoApi) {
     suspend fun listar(page: Int) = api.notificacoes(page)
     suspend fun ler(id: Int) = api.ler(id)
+}
+class ProfissionalRepository(private val api: TrampoApi) {
+    suspend fun servicos() = api.servicosProprios()
+    suspend fun categorias() = api.categorias()
+    suspend fun criarServico(request: ServicoRequest) = api.criarServico(request)
+    suspend fun editarServico(id: Int, request: ServicoRequest) = api.editarServico(id, request)
+    suspend fun removerServico(id: Int) = api.removerServico(id)
+    suspend fun locais() = api.locais()
+    suspend fun local(id: Int) = api.local(id)
+    suspend fun criarLocal(request: LocalRequest) = api.criarLocal(request)
+    suspend fun editarLocal(id: Int, request: LocalRequest) = api.editarLocal(id, request)
+    suspend fun excluirLocal(id: Int) = api.excluirLocal(id)
+    suspend fun avaliacoes() = api.avaliacoesRecebidas()
 }

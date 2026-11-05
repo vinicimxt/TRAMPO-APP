@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt-BR">
   <string name="app_name">TRAMPO</string>
   <string name="login_title">Encontre quem resolve.</string>
-  <string name="login_subtitle">Entre com sua conta de cliente para encontrar serviços e acompanhar seus pedidos.</string>
+  <string name="login_subtitle">Entre com sua conta de cliente ou profissional para acompanhar seus serviços e agendamentos.</string>
   <string name="email">E-mail</string>
   <string name="password">Senha</string>
   <string name="sign_in">Entrar</string>
@@ -18,7 +18,7 @@
   <string name="loading">Carregando…</string>
   <string name="session_check">Verificando sua sessão</string>
   <string name="required">Preencha este campo.</string>
-  <string name="client_only">Esta versão do aplicativo atende contas de cliente. Use o site para os demais perfis.</string>
+  <string name="client_only">Este perfil ainda não está disponível no aplicativo.</string>
   <string name="error_credentials">Não foi possível autenticar. Confira seu e-mail e senha.</string>
   <string name="error_session">Sua sessão expirou ou não é mais válida. Entre novamente.</string>
   <string name="error_connection">Não foi possível conectar ao TRAMPO. Verifique sua conexão e tente novamente.</string>

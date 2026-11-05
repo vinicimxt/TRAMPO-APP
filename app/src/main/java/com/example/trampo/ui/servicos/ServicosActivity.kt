@@ -8,6 +8,7 @@ import com.example.trampo.R
 import com.example.trampo.data.model.ServicoResponse
 import com.example.trampo.ui.*
 import com.example.trampo.ui.agendamentos.NovoAgendamentoActivity
+import java.util.Locale
 
 class ServicosActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,8 +75,36 @@ class DetalheServicoActivity : BaseActivity() {
                 findViewById<TextView>(R.id.professional_info).text = listOfNotNull(it.nomeProfissional,it.categoria,it.subcategoria).filter { value -> value.isNotBlank() }.joinToString("\n")
             }
         }
+        vm.reviews.observe(this) { state ->
+            val summary = findViewById<TextView>(R.id.reviews_summary)
+            val list = findViewById<LinearLayout>(R.id.reviews_list)
+            when (state) {
+                is UiState.Loading -> summary.setText(R.string.loading)
+                is UiState.Error -> summary.setText(state.failure.message)
+                is UiState.Success -> {
+                    list.removeAllViews()
+                    val data = state.value
+                    summary.text = if (data.total == 0) getString(R.string.no_reviews)
+                        else resources.getQuantityString(R.plurals.reviews_summary, data.total,
+                            String.format(Locale.forLanguageTag("pt-BR"), "%.1f", data.media), data.total)
+                    data.avaliacoes.forEach { review ->
+                        val item = TextView(this).apply {
+                            val stars = "${"★".repeat(review.nota.coerceIn(0, 5))}${"☆".repeat((5 - review.nota).coerceIn(0, 5))}"
+                            text = getString(R.string.review_public_card, stars, review.comentario.orEmpty(), review.clienteNome)
+                            contentDescription = getString(R.string.review_spoken, review.nota, review.comentario.orEmpty(), review.clienteNome)
+                            setTextColor(androidx.core.content.ContextCompat.getColor(this@DetalheServicoActivity, R.color.ink))
+                            textSize = 16f
+                            setPadding(0, 8, 0, 20)
+                        }
+                        list.addView(item)
+                    }
+                }
+                else -> Unit
+            }
+        }
         findViewById<Button>(R.id.times).setOnClickListener { open(NovoAgendamentoActivity::class.java, id) }
-        findViewById<Button>(R.id.retry).setOnClickListener { vm.load(id) }
+        findViewById<Button>(R.id.retry).setOnClickListener { vm.load(id); vm.loadReviews(id) }
         if (vm.state.value is UiState.Idle) vm.load(id)
+        if (vm.reviews.value is UiState.Idle) vm.loadReviews(id)
     }
 }

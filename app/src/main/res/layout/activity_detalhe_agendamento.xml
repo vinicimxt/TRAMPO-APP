@@ -1,19 +1,42 @@
-<?xml version='1.0' encoding='utf-8'?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
-  <LinearLayout android:id="@+id/root" android:orientation="vertical" style="@style/Page" android:layout_height="wrap_content">
-    <com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" app:icon="@drawable/ic_back" />
-    <TextView style="@style/Title" android:text="@string/booking_details" />
-    <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" android:layout_marginBottom="16dp" />
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+  <LinearLayout android:id="@+id/root" style="@style/Page" android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton android:id="@+id/back" style="@style/QuietAction" android:text="@string/back" />
+    <TextView style="@style/SectionTitle" android:text="@string/booking_details" />
+    <ProgressBar android:id="@+id/progress" android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center_horizontal" android:visibility="gone" android:contentDescription="@string/loading" />
     <TextView android:id="@+id/message" style="@style/Message" android:accessibilityLiveRegion="polite" />
-    <TextView android:id="@+id/name" style="@style/Title" />
-    <TextView style="@style/Badge" android:text="@string/status_pending" android:id="@+id/status" />
-    <TextView style="@style/SectionTitle" android:text="@string/booking_information" />
-    <TextView android:id="@+id/body" style="@style/Body" android:drawablePadding="8dp" app:drawableStartCompat="@drawable/ic_clock" />
-    <TextView style="@style/SectionTitle" android:text="@string/booking_extra" />
-    <TextView android:id="@+id/description" style="@style/Body" />
+    <TextView android:id="@+id/name" style="@style/Title" android:textColor="@color/brand" />
+    <TextView android:id="@+id/status" style="@style/Badge" />
+    <LinearLayout android:id="@+id/person_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView android:id="@+id/person_label" style="@style/Label" android:text="@string/professional" />
+      <TextView android:id="@+id/person_value" style="@style/Body" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/date_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView style="@style/Label" android:text="@string/booking_information" />
+      <TextView android:id="@+id/date_value" style="@style/Body" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/modality_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView style="@style/Label" android:text="@string/filter_modality" />
+      <TextView android:id="@+id/modality_value" style="@style/Body" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/location_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView style="@style/Label" android:text="@string/location_label" />
+      <TextView android:id="@+id/location_value" style="@style/Body" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/notes_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView style="@style/Label" android:text="@string/notes_label" />
+      <TextView android:id="@+id/notes_value" style="@style/Body" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/value_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_section" android:padding="16dp" android:layout_marginBottom="8dp">
+      <TextView android:id="@+id/value_label" style="@style/Label" android:text="@string/current_price_label" />
+      <TextView android:id="@+id/value_value" style="@style/Price" />
+    </LinearLayout>
     <com.google.android.material.button.MaterialButton android:id="@+id/complete_booking" style="@style/Action" android:text="@string/complete_booking" android:visibility="gone" />
     <com.google.android.material.button.MaterialButton android:id="@+id/review_booking" style="@style/SecondaryAction" android:text="@string/review_booking" android:visibility="gone" />
-    <com.google.android.material.button.MaterialButton android:id="@+id/cancel" style="@style/DangerAction" android:text="@string/cancel_booking" app:icon="@drawable/ic_close" />
-    <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" app:icon="@drawable/ic_refresh" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/confirm_booking_professional" style="@style/Action" android:text="@string/confirm_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/refuse_booking" style="@style/DangerAction" android:text="@string/refuse_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/finalize_booking" style="@style/Action" android:text="@string/finalize_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/cancel" style="@style/DangerAction" android:text="@string/cancel_booking" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/retry" style="@style/QuietAction" android:text="@string/refresh" />
   </LinearLayout>
 </ScrollView>
