@@ -33,26 +33,24 @@ A autorização real das operações permanece sob responsabilidade do backend.
 
 | Área | Cliente | Profissional |
 | --- | --- | --- |
-| Conta | Cadastro, login, edição de perfil, alteração de senha e logout | Login e logout; edição de perfil/senha ainda depende de rotas REST não liberadas ao perfil Profissional |
+| Conta | Cadastro, login, edição de perfil, alteração de senha e logout | Login, logout, edição de nome/telefone e alteração de senha pela API |
 | Serviços | Explorar catálogo, buscar, filtrar e visualizar detalhes | Listar, cadastrar, editar e remover/desativar serviços |
 | Categorias | Consultar categorias e subcategorias | Utilizadas no cadastro de serviços |
 | Disponibilidade | Consultar horários disponíveis | Configurar disponibilidade semanal por serviço |
 | Locais | Consultar informações do atendimento quando aplicável | Listar, cadastrar, editar e excluir locais |
 | CEP | Utilizado por meio do backend | Consulta e preenchimento de endereço por meio do backend |
 | Agendamentos | Solicitar, consultar, cancelar e confirmar conclusão | Consultar recebidos, confirmar, recusar, cancelar e finalizar |
-| Avaliações | Enviar avaliação após atendimento permitido | Visualização de avaliações recebidas ainda depende de contrato REST ausente |
-| Notificações | Disponível | Tela existente, porém a rota atual da API restringe o acesso ao perfil Cliente |
-| Suporte | Disponível | Tela existente, porém a rota atual da API restringe o acesso ao perfil Cliente |
+| Avaliações | Enviar avaliação após atendimento permitido | Visualização de avaliações recebidas pela API |
+| Notificações | Disponível | Tela integrada à API para o usuário autenticado |
+| Suporte | Disponível | Tela integrada à API para o usuário autenticado |
 
-Algumas telas profissionais e de avaliações já existem no aplicativo, mas dependem de endpoints que ainda não estão disponíveis ou que atualmente possuem restrição de autorização no backend.
-
-A existência de uma tela no aplicativo não significa que sua integração REST esteja concluída.
+As telas de avaliações, notificações, suporte e perfil usam os contratos REST liberados na estabilização final. Os testes de API e o build Android foram executados; a validação visual no emulador depende de aceleração de hardware neste ambiente.
 
 ---
 
 ## Limitações conhecidas
 
-Na versão atual existem algumas limitações conhecidas de integração:
+Os contratos abaixo foram liberados no backend. A validação visual no emulador permanece pendente neste ambiente.
 
 ### Avaliações
 
@@ -63,26 +61,15 @@ GET /api/v1/servicos/{id}/avaliacoes
 GET /api/v1/profissionais/me/avaliacoes
 ```
 
-ainda não estão implementadas no backend atual.
-
-Por isso:
-
-- o Cliente pode enviar uma avaliação quando permitido;
-- média e quantidade de avaliações podem aparecer quando fornecidas pelo serviço;
-- comentários individuais ainda não possuem endpoint público;
-- a tela de avaliações recebidas do Profissional ainda não possui integração completa.
+retornam, respectivamente, avaliações do serviço ativo e avaliações recebidas pelo profissional autenticado, com média, total, nota, comentário e data. O nome do serviço também é retornado quando disponível.
 
 ### Notificações e suporte do Profissional
 
-As rotas atuais de notificações e suporte estão autorizadas apenas para Cliente.
-
-Quando utilizadas com uma conta Profissional, a API retorna `403 Forbidden`.
-
-As telas profissionais foram mantidas para evolução futura, mas sua integração não deve ser considerada concluída.
+As rotas de notificações e suporte aceitam Cliente e Profissional autenticados. As listas e a leitura de notificações usam a identidade do JWT; suporte permite envio e consulta dos próprios chamados.
 
 ### Perfil Profissional
 
-A edição de perfil e alteração de senha pelo aplicativo dependem de contratos REST que ainda não estão liberados ao perfil Profissional.
+O contrato existente de perfil aceita Cliente e Profissional para consulta e edição de nome/telefone. A alteração de senha reutiliza a regra existente, que exige a senha atual.
 
 ---
 
@@ -491,20 +478,4 @@ Android e Desktop nunca acessam diretamente o SQL Server.
 
 O Android possui suporte estrutural para Cliente e Profissional.
 
-A área Cliente possui maior cobertura dos contratos REST atuais.
-
-A área Profissional já possui telas e integração para:
-
-- agendamentos;
-- serviços;
-- locais;
-- disponibilidade.
-
-Ainda existem lacunas REST para:
-
-- perfil profissional;
-- avaliações recebidas;
-- notificações profissionais;
-- suporte profissional.
-
-Essas limitações estão documentadas e devem ser consideradas antes de classificar o aplicativo como totalmente homologado para ambos os perfis.
+As áreas Cliente e Profissional têm contratos REST para agendamentos, serviços, locais, disponibilidade, perfil, avaliações, notificações e suporte conforme cada perfil. O build, os testes unitários e os contratos da API foram validados. A navegação visual Android ainda não foi homologada neste ambiente por ausência de aceleração do emulador.
