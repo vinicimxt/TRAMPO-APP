@@ -4,7 +4,7 @@ plugins { alias(libs.plugins.android.application) }
 
 val productionUrl = providers.gradleProperty("trampoApiUrl").orElse("").get()
 val debugUrl = providers.gradleProperty("trampoDebugApiUrl").orNull
-    ?: productionUrl.ifEmpty { "http://10.0.2.2:5165/" }
+    ?: "http://127.0.0.1:5165/"
 val debugUri = runCatching { URI(debugUrl) }.getOrNull()
 require(debugUrl.endsWith("/") && !debugUrl.contains("\"") && !debugUrl.contains("\n") &&
     !debugUrl.contains("\r") && debugUri != null &&

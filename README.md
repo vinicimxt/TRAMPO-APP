@@ -209,10 +209,10 @@ Aguarde:
 
 Utilize um dispositivo virtual compatível.
 
-O Debug do aplicativo utiliza:
+Para usar o Debug padrão no emulador, execute `adb -e reverse tcp:5165 tcp:5165`. Para acessar o host diretamente pelo endereço do emulador, compile com a propriedade:
 
 ```text
-http://10.0.2.2:5165/
+-PtrampoDebugApiUrl=http://10.0.2.2:5165/
 ```
 
 No Android Emulator, `10.0.2.2` representa o `localhost` da máquina host.
@@ -237,7 +237,7 @@ Depois, entre com uma conta Cliente ou Profissional.
 
 ## Dispositivo físico — modo recomendado
 
-O Debug padrão do Android Studio continua usando `http://10.0.2.2:5165/` no emulador. Para um celular físico, os scripts abaixo configuram `adb reverse` e instalam um Debug com `http://127.0.0.1:5165/`. Não é necessário descobrir o IP do computador.
+O Debug padrão usa `http://127.0.0.1:5165/`. Os scripts configuram o túnel USB e instalam o APK Debug no celular.
 
 1. Ative a Depuração USB, conecte o celular e autorize o computador.
 2. Inicie o backend em `http://localhost:5165/`.
@@ -263,7 +263,7 @@ O Debug permite HTTP sem criptografia somente para `10.0.2.2`, `localhost` e `12
 
 ### Override manual da URL
 
-No Debug, a prioridade é `-PtrampoDebugApiUrl=...`, depois `-PtrampoApiUrl=...` e, por padrão, `http://10.0.2.2:5165/`. O script do celular passa `-PtrampoDebugApiUrl=http://127.0.0.1:5165/`. Use propriedades manuais para testes LAN, outros computadores, servidores remotos ou CI; a URL deve terminar em `/`. Uma URL HTTP para outro host também exige adicioná-lo explicitamente a `app/src/debug/res/xml/network_security_config.xml`. Em Release, `-PtrampoApiUrl=...` deve continuar sendo HTTPS.
+No Debug, use `-PtrampoDebugApiUrl=...` para substituir o padrão `http://127.0.0.1:5165/`. O script do celular passa `-PtrampoDebugApiUrl=http://127.0.0.1:5165/`. Use propriedades manuais para testes LAN, outros computadores, servidores remotos ou CI; a URL deve terminar em `/`. Uma URL HTTP para outro host também exige adicioná-lo explicitamente a `app/src/debug/res/xml/network_security_config.xml`. Em Release, `-PtrampoApiUrl=...` deve continuar sendo HTTPS.
 
 ---
 

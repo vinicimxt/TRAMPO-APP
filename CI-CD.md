@@ -19,7 +19,7 @@ Lint: zero erros, 10 avisos preexistentes. APK em app/build/outputs/apk/debug.
 Relatórios em app/build/reports e app/build/test-results; estes últimos são
 substituídos a cada execução filtrada, por exemplo pela integração LiveApiTest.
 
-Debug mantém http://10.0.2.2:5165/. Release exige -PtrampoApiUrl com a URL HTTPS
+Debug usa http://127.0.0.1:5165/ por padrão. Release exige -PtrampoApiUrl com a URL HTTPS
 real terminada em /. Nenhuma URL de produção padrão foi definida. Sem URL ou com
 HTTP, o build Release falha. A política de rede principal proíbe cleartext.
 APK Debug não serve como artefato de distribuição da versão Release.
