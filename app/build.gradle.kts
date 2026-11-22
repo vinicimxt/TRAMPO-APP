@@ -3,9 +3,14 @@ import java.net.URI
 plugins { alias(libs.plugins.android.application) }
 
 val productionUrl = providers.gradleProperty("trampoApiUrl").orElse("").get()
-require(productionUrl.isEmpty() || (productionUrl.startsWith("https://") && productionUrl.endsWith("/") &&
-    !productionUrl.contains("\"") && !productionUrl.contains("\n") && !productionUrl.contains("\r"))) {
-    "trampoApiUrl deve ser uma URL HTTPS terminada em /."
+val debugUrl = providers.gradleProperty("trampoDebugApiUrl").orNull
+    ?: productionUrl.ifEmpty { "http://10.0.2.2:5165/" }
+val debugUri = runCatching { URI(debugUrl) }.getOrNull()
+require(debugUrl.endsWith("/") && !debugUrl.contains("\"") && !debugUrl.contains("\n") &&
+    !debugUrl.contains("\r") && debugUri != null &&
+    debugUri.scheme in setOf("http", "https") && !debugUri.host.isNullOrBlank() &&
+    debugUri.userInfo == null && debugUri.query == null && debugUri.fragment == null) {
+    "A URL Debug deve ser HTTP(S), ter host e terminar em /."
 }
 android {
     namespace = "com.example.trampo"
@@ -21,7 +26,7 @@ android {
     buildFeatures { buildConfig = true }
     testOptions { unitTests.isIncludeAndroidResources = true }
     buildTypes {
-        debug { buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:5165/\"") }
+        debug { buildConfigField("String", "API_BASE_URL", "\"$debugUrl\"") }
         release {
             optimization { enable = false }
             buildConfigField("String", "API_BASE_URL", "\"$productionUrl\"")
@@ -56,6 +61,11 @@ dependencies {
 val validateReleaseApi = tasks.register("validateReleaseApi") {
     val urlToValidate = productionUrl
     doLast {
+        require(urlToValidate.startsWith("https://") && urlToValidate.endsWith("/") &&
+            !urlToValidate.contains("\"") && !urlToValidate.contains("\n") &&
+            !urlToValidate.contains("\r")) {
+            "trampoApiUrl deve ser uma URL HTTPS terminada em /."
+        }
         val uri = URI(urlToValidate)
         require(uri.scheme == "https" && !uri.host.isNullOrBlank() &&
             uri.userInfo == null && uri.query == null && uri.fragment == null &&

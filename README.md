@@ -235,21 +235,35 @@ Depois, entre com uma conta Cliente ou Profissional.
 
 ---
 
-## Dispositivo físico
+## Dispositivo físico — modo recomendado
 
-A URL:
+O Debug padrão do Android Studio continua usando `http://10.0.2.2:5165/` no emulador. Para um celular físico, os scripts abaixo configuram `adb reverse` e instalam um Debug com `http://127.0.0.1:5165/`. Não é necessário descobrir o IP do computador.
 
-```text
-http://10.0.2.2:5165/
+1. Ative a Depuração USB, conecte o celular e autorize o computador.
+2. Inicie o backend em `http://localhost:5165/`.
+3. Na raiz deste repositório, execute:
+
+Linux/macOS:
+
+```bash
+./scripts/run-device-debug.sh
 ```
 
-funciona apenas no Android Emulator.
+Windows PowerShell:
 
-Para utilizar dispositivo físico, configure uma URL que possa ser acessada pela rede do aparelho.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-device-debug.ps1
+```
 
-Também será necessário revisar a política de tráfego HTTP caso o ambiente não utilize HTTPS.
+4. Abra o TRAMPO no celular.
 
-Para builds de produção, utilize sempre HTTPS.
+O túnel leva `127.0.0.1:5165` do celular à porta 5165 do computador via ADB. O script verifica `adb reverse --list` antes da instalação. Se `adb devices` listar USB e Wi-Fi ao mesmo tempo, selecione o serial USB: `./scripts/run-device-debug.sh SERIAL` ou `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-device-debug.ps1 SERIAL`. Nesse caso, o APK é instalado somente no serial escolhido. Se o Linux não permitir executar o script diretamente, use `bash scripts/run-device-debug.sh`.
+
+O Debug permite HTTP sem criptografia somente para `10.0.2.2`, `localhost` e `127.0.0.1`. Release continua bloqueando HTTP e exigindo URL HTTPS.
+
+### Override manual da URL
+
+No Debug, a prioridade é `-PtrampoDebugApiUrl=...`, depois `-PtrampoApiUrl=...` e, por padrão, `http://10.0.2.2:5165/`. O script do celular passa `-PtrampoDebugApiUrl=http://127.0.0.1:5165/`. Use propriedades manuais para testes LAN, outros computadores, servidores remotos ou CI; a URL deve terminar em `/`. Uma URL HTTP para outro host também exige adicioná-lo explicitamente a `app/src/debug/res/xml/network_security_config.xml`. Em Release, `-PtrampoApiUrl=...` deve continuar sendo HTTPS.
 
 ---
 
