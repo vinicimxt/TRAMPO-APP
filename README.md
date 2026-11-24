@@ -269,6 +269,8 @@ No Debug, use `-PtrampoDebugApiUrl=...` para substituir o padrão `http://127.0.
 
 ## Ambiente online
 
+O [APK online de previa](https://github.com/vinicimxt/TRAMPO-APP/releases/tag/v2026.11.23-online-preview) esta disponivel para download na release do projeto. Ele e um build Debug assinado com chave de desenvolvimento; leia as ressalvas antes de instalar.
+
 A API publicada esta em `https://trampo.tryasp.net/` (com barra final). Para gerar um Debug online, na raiz do repositorio:
 
 Windows PowerShell:
