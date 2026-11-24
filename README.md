@@ -267,6 +267,26 @@ No Debug, use `-PtrampoDebugApiUrl=...` para substituir o padrão `http://127.0.
 
 ---
 
+## Ambiente online
+
+A API publicada esta em `https://trampo.tryasp.net/` (com barra final). Para gerar um Debug online, na raiz do repositorio:
+
+Windows PowerShell:
+
+```powershell
+.\gradlew.bat assembleDebug -PtrampoApiUrl=https://trampo.tryasp.net/
+```
+
+Linux/macOS:
+
+```bash
+./gradlew assembleDebug -PtrampoApiUrl=https://trampo.tryasp.net/
+```
+
+Para instalar em um dispositivo conectado, substitua `assembleDebug` por `installDebug`. O modo online nao precisa de `adb reverse` nem do IP do computador. O Debug sem propriedades continua usando `http://127.0.0.1:5165/` com ADB reverse; para o Emulator sem reverse, use `-PtrampoDebugApiUrl=http://10.0.2.2:5165/`. A propriedade `trampoDebugApiUrl` tem prioridade sobre `trampoApiUrl` no Debug. Release usa `trampoApiUrl` e aceita somente HTTPS.
+
+---
+
 ## Compilar e testar
 
 No PowerShell, com o JDK 25 disponível no ambiente:
@@ -342,31 +362,23 @@ A experiência com TalkBack, fonte ampliada, ordem de foco, áreas de toque e co
 
 ---
 
-## Configuração de Release
+## Configuracao de Release e assinatura
 
-O build Release exige uma URL HTTPS válida para a API.
+A API publicada e `https://trampo.tryasp.net/`. Release exige HTTPS e bloqueia trafego HTTP em `app/src/main/res/xml/network_security_config.xml`.
 
-Exemplo:
+Para produzir um APK Release **assinado com sua propria chave**, crie uma keystore em local privado. O comando abaixo pede a senha interativamente; nao informe senha na linha de comando:
 
 ```powershell
-.\gradlew.bat assembleRelease -PtrampoApiUrl=https://api.seu-dominio.com/
+keytool -genkeypair -v -keystore release.jks -alias trampo -keyalg RSA -keysize 3072 -validity 10000
 ```
 
-Substitua o domínio por uma API realmente implantada.
+Copie `keystore.properties.example` para `keystore.properties` na raiz e preencha `storeFile`, `storePassword`, `keyAlias` e `keyPassword` localmente. Esses arquivos, assim como `*.jks`, sao ignorados pelo Git. Guarde a chave e suas senhas com seguranca; futuras atualizacoes do app precisam da mesma chave. Depois execute:
 
-O projeto atualmente não possui uma URL pública de produção definida.
+```powershell
+.\gradlew.bat assembleRelease -PtrampoApiUrl=https://trampo.tryasp.net/
+```
 
-O Manifest principal bloqueia tráfego HTTP não criptografado para produção.
-
-Para distribuição real também será necessário configurar:
-
-- assinatura;
-- keystore;
-- versão;
-- política de publicação;
-- requisitos da Google Play.
-
-O APK Debug não deve ser tratado como build de distribuição.
+Sem `keystore.properties`, o Gradle pode gerar um Release **nao assinado**, que nao deve ser entregue para instalacao. Um Debug gerado por `assembleDebug` e assinado pela chave Debug local e pode ser instalado diretamente, mas fica marcado como Debug e nao substitui o Release assinado para distribuicao definitiva.
 
 ---
 

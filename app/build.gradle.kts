@@ -1,9 +1,11 @@
 import java.net.URI
+import java.util.Properties
 
 plugins { alias(libs.plugins.android.application) }
 
 val productionUrl = providers.gradleProperty("trampoApiUrl").orElse("").get()
 val debugUrl = providers.gradleProperty("trampoDebugApiUrl").orNull
+    ?: productionUrl.takeIf { it.isNotBlank() }
     ?: "http://127.0.0.1:5165/"
 val debugUri = runCatching { URI(debugUrl) }.getOrNull()
 require(debugUrl.endsWith("/") && !debugUrl.contains("\"") && !debugUrl.contains("\n") &&
@@ -11,6 +13,15 @@ require(debugUrl.endsWith("/") && !debugUrl.contains("\"") && !debugUrl.contains
     debugUri.scheme in setOf("http", "https") && !debugUri.host.isNullOrBlank() &&
     debugUri.userInfo == null && debugUri.query == null && debugUri.fragment == null) {
     "A URL Debug deve ser HTTP(S), ter host e terminar em /."
+}
+val releaseSigningFile = rootProject.file("keystore.properties")
+val releaseSigningProperties = Properties()
+if (releaseSigningFile.isFile) {
+    releaseSigningFile.inputStream().use(releaseSigningProperties::load)
+    require(listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+        .all { !releaseSigningProperties.getProperty(it).isNullOrBlank() }) {
+        "keystore.properties deve conter storeFile, storePassword, keyAlias e keyPassword."
+    }
 }
 android {
     namespace = "com.example.trampo"
@@ -25,9 +36,20 @@ android {
     }
     buildFeatures { buildConfig = true }
     testOptions { unitTests.isIncludeAndroidResources = true }
+    signingConfigs {
+        if (releaseSigningFile.isFile) {
+            create("release") {
+                storeFile = rootProject.file(releaseSigningProperties.getProperty("storeFile"))
+                storePassword = releaseSigningProperties.getProperty("storePassword")
+                keyAlias = releaseSigningProperties.getProperty("keyAlias")
+                keyPassword = releaseSigningProperties.getProperty("keyPassword")
+            }
+        }
+    }
     buildTypes {
         debug { buildConfigField("String", "API_BASE_URL", "\"$debugUrl\"") }
         release {
+            signingConfig = signingConfigs.findByName("release")
             optimization { enable = false }
             buildConfigField("String", "API_BASE_URL", "\"$productionUrl\"")
         }
